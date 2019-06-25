@@ -64,9 +64,6 @@
             let result = await ajax('post', 'get_review_list', { page, page_size: pageSize, need_page: true })
 
 			if (!result || !result.review_list || !result.success) {
-			  wx.showToast({
-				title: '网络错误，请稍后再试'
-			  })
 			  return
 			}
 			let newArr = this.filterReviewList(result.review_list)

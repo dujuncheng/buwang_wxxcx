@@ -99,7 +99,7 @@
         })
 
         wx.redirectTo({
-          url: '/pages/reviewList/reviewList'
+          url: '/pages/review-list/index'
         })
       },
       // 点击了【注册按钮】
@@ -133,7 +133,7 @@
         })
 
         wx.redirectTo({
-          url: '/pages/reviewList/reviewList'
+          url: '/pages/review-list/index'
         })
       },
       changeState (text) {
