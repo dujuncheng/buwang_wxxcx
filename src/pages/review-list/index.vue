@@ -40,12 +40,19 @@
 	export default {
 	  data () {
 	    return {
-
+	      reviewList: []
 		}
 	  },
 	  methods: {
         async getReviewList (page, pageSize) {
-          await ajax('post', 'get_review_list', { page, page_size: pageSize, need_page: true })
+          try {
+            let result = await ajax('post', 'get_review_list', { page, page_size: pageSize, need_page: true })
+			if (!result || !result.review_list) {
+
+			}
+		  } catch (e) {
+			console.log(e)
+          }
 		}
 	  },
 	  mounted () {

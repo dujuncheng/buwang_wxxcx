@@ -133,7 +133,7 @@
         })
 
         wx.redirectTo({
-          url: 'pages/reviewList/reviewList',
+          url: 'pages/reviewList/reviewList'
         })
       },
       changeState (text) {

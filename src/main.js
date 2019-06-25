@@ -11,8 +11,9 @@ export default {
   config: {
     // pages 的首个页面会被编译成首页
     pages: [
-      'pages/reviewList/reviewList',
-      'pages/loginPage/loginPage'
+      'pages/review-list/index',
+      'pages/login-page/index',
+      'pages/import-template/index'
     ],
     window: {
       backgroundTextStyle: 'light',
