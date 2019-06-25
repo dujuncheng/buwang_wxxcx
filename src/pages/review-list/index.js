@@ -7,5 +7,9 @@ app.$mount()
 
 export default {
   config: {
+    navigationBarTitleText: "日拱一卒",
+    enablePullDownRefresh: true,
+    usingComponents: {
+    }
   }
 }

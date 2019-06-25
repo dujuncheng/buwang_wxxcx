@@ -1,6 +1,9 @@
 <template>
-	<div>
-		<tuanAvater :tuanAvaters="tuanAvaters"></tuanAvater>
+	<div >
+		<!-- 使用自己封装的业务组件  -->
+		<tuan-avater :tuanAvaters="tuanAvaters"></tuan-avater>
+		<!-- 使用 第三方封装的 ui 组件 -->
+		<!--<van-button type="primary">按钮</van-button>-->
 	</div>
 </template>
 

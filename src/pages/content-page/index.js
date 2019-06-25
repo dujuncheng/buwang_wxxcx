@@ -7,9 +7,10 @@ app.$mount()
 
 export default {
   config: {
+    navigationBarTitleText: "日拱一卒",
+    enablePullDownRefresh: true,
     usingComponents: {
-      'tuan-avater': '/native/tuan-avater/index'
-      // 'van-button': '/static/vant/button/index'
+      wemark: "/native/wemark/wemark"
     }
   }
 }

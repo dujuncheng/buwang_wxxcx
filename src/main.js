@@ -12,6 +12,7 @@ export default {
     // pages 的首个页面会被编译成首页
     pages: [
       'pages/review-list/index',
+      'pages/content-page/index',
       'pages/login-page/index',
       'pages/import-template/index'
     ],

@@ -1,33 +1,17 @@
 <template>
 	<div class="rediv-list-container">
-		<div class="item">
+		<div class="item" v-for="(item, index) in reviewList" :key="index" @click="goContent(item.note_id)">
 			<div class="title">
-				这是一条新的笔记adda;lskfjdasl;kfsdf jasl;f sa
+				{{item.title}}
 			</div>
 			<div class="desc-container">
 				<div class="time-container">
 					<img class="time-img" src="http://h0.hucdn.com/open201926/e777352fdc80ca6d_200x200.png">
-					<div class="time-text">333 字</div>
+					<div class="time-text">{{item.contentLength}} 字</div>
 				</div>
 				<div class="number-container">
 					<img class="number-img" src="http://h0.hucdn.com/open201926/d169287f2feaae83_200x200.png" />
-					<div class="number-text">12 次</div>
-				</div>
-			</div>
-			<div class="line"></div>
-		</div>
-		<div class="item">
-			<div class="title">
-				这是一条新的笔记adda;lskfjdasl;kfsdf jasl;f sa
-			</div>
-			<div class="desc-container">
-				<div class="time-container">
-					<img class="time-img" src="http://h0.hucdn.com/open201926/e777352fdc80ca6d_200x200.png">
-					<div class="time-text">333 字</div>
-				</div>
-				<div class="number-container">
-					<img class="number-img" src="http://h0.hucdn.com/open201926/d169287f2feaae83_200x200.png" />
-					<div class="number-text">12 次</div>
+					<div class="number-text">{{item.review_num}} 次</div>
 				</div>
 			</div>
 			<div class="line"></div>
@@ -37,26 +21,92 @@
 
 <script>
 	import ajax from '../../utils/ajax.js'
+    import { Base64 } from 'js-base64'
+	import {REVIEW_PAGE_SIZE} from '../../config/const.js'
+
 	export default {
 	  data () {
 	    return {
-	      reviewList: []
+	      reviewList: [],
+		  page: 1,
+          hasMore: true,
 		}
 	  },
-	  methods: {
+      /**
+       * 页面相关事件处理函数--监听用户下拉动作
+       */
+      onPullDownRefresh() {
+        this.page = 1
+		this.reviewList = []
+		this.hasMore = true
+        this.getReviewList(this.page, REVIEW_PAGE_SIZE)
+      },
+      /**
+       * 页面上拉触底事件的处理函数
+       */
+      onReachBottom() {
+        if (this.hasMore) {
+          this.page = this.page + 1
+          this.getReviewList(this.page, REVIEW_PAGE_SIZE)
+		}
+      },
+      methods: {
+        goContent (noteId) {
+          if (noteId) {
+            wx.navigateTo({
+			  url: `/pages/content-page/index?note_id=${noteId}`
+			})
+		  }
+		},
         async getReviewList (page, pageSize) {
           try {
             let result = await ajax('post', 'get_review_list', { page, page_size: pageSize, need_page: true })
-			if (!result || !result.review_list) {
 
+			if (!result || !result.review_list || !result.success) {
+			  wx.showModal({
+				type: 'error',
+				message: '网络错误，请稍后再试'
+			  })
+			  return
 			}
+			let newArr = this.filterReviewList(result.review_list)
+
+			if (newArr.length < REVIEW_PAGE_SIZE) {
+			  this.hasMore = false
+			}
+
+			this.reviewList = this.reviewList.concat(newArr)
+
 		  } catch (e) {
 			console.log(e)
           }
+		},
+        /**
+		 * 过滤一下 result.review_list 数组
+         * @param reviewList
+         * @returns {*}
+         */
+        filterReviewList(reviewList) {
+          for (let i = 0; i < reviewList.length; i++) {
+            reviewList[i].content = Base64.decode(reviewList[i].content)
+			reviewList[i].contentLength = reviewList[i].content.length
+            reviewList[i].needReview = this.checkNeedReview(reviewList[i].notify_time)
+          }
+          return reviewList
+		},
+        checkNeedReview(num) {
+          let time = Number(num) * 1000
+		  let now = new Date().getTime()
+
+		  if (time < now) {
+		    return true
+		  } else {
+		    return false
+		  }
 		}
 	  },
 	  mounted () {
-	    this.getReviewList(1, 10)
+	    this.getReviewList(1, REVIEW_PAGE_SIZE)
 	  }
 	}
 </script>

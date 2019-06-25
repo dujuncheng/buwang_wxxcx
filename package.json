@@ -34,6 +34,7 @@
     "@megalo/api": "latest",
     "@megalo/vhtml-plugin": "latest",
     "megalo": "latest",
-    "octoparse": "^0.4.2"
+    "octoparse": "^0.4.2",
+    "vant-weapp": "^0.5.15"
   }
 }
