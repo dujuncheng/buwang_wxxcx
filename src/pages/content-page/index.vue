@@ -1,5 +1,7 @@
 <template>
 	<div class="content-container">
+		<h1>{{noteObj.title}}</h1>
+
 		<wemark :md="noteObj.content" highlight type="wemark"></wemark>
 
 		<button type="primary" @click="sumitReview">确认已经复习</button>

@@ -15,6 +15,7 @@
 				</div>
 			</div>
 			<div class="line"></div>
+			<div class="circle" v-if="item.needReview"></div>
 		</div>
 	</div>
 </template>
@@ -22,20 +23,20 @@
 <script>
 	import ajax from '../../utils/ajax.js'
     import { Base64 } from 'js-base64'
-	import {REVIEW_PAGE_SIZE} from '../../config/const.js'
+	import { REVIEW_PAGE_SIZE } from '../../config/const.js'
 
 	export default {
 	  data () {
 	    return {
 	      reviewList: [],
 		  page: 1,
-          hasMore: true,
+          hasMore: true
 		}
 	  },
       /**
        * 页面相关事件处理函数--监听用户下拉动作
        */
-      onPullDownRefresh() {
+      onPullDownRefresh () {
         this.page = 1
 		this.reviewList = []
 		this.hasMore = true
@@ -44,7 +45,7 @@
       /**
        * 页面上拉触底事件的处理函数
        */
-      onReachBottom() {
+      onReachBottom () {
         if (this.hasMore) {
           this.page = this.page + 1
           this.getReviewList(this.page, REVIEW_PAGE_SIZE)
@@ -63,9 +64,8 @@
             let result = await ajax('post', 'get_review_list', { page, page_size: pageSize, need_page: true })
 
 			if (!result || !result.review_list || !result.success) {
-			  wx.showModal({
-				type: 'error',
-				message: '网络错误，请稍后再试'
+			  wx.showToast({
+				title: '网络错误，请稍后再试'
 			  })
 			  return
 			}
@@ -76,7 +76,6 @@
 			}
 
 			this.reviewList = this.reviewList.concat(newArr)
-
 		  } catch (e) {
 			console.log(e)
           }
@@ -86,7 +85,7 @@
          * @param reviewList
          * @returns {*}
          */
-        filterReviewList(reviewList) {
+        filterReviewList (reviewList) {
           for (let i = 0; i < reviewList.length; i++) {
             reviewList[i].content = Base64.decode(reviewList[i].content)
 			reviewList[i].contentLength = reviewList[i].content.length
@@ -94,7 +93,7 @@
           }
           return reviewList
 		},
-        checkNeedReview(num) {
+        checkNeedReview (num) {
           let time = Number(num) * 1000
 		  let now = new Date().getTime()
 
@@ -174,6 +173,16 @@
 		position: absolute;
 		bottom: 0;
 		right: 0;
+	}
+
+	.circle {
+		position: absolute;
+		right: 30px;
+		top: 30px;
+		width: 10px;
+		height: 10px;
+		background-color: red;
+		border-radius: 50%;
 	}
 
 </style>

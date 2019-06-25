@@ -15,6 +15,12 @@ const ajax = (type, method, params) => {
         if (res.header && res.header['x_session']) {
           Storage.cookie.set(res.header['x_session'])
         }
+        
+        if (res && res.data && !res.data.success && Number(res.data.err_code) === 2) {
+          wx.redirectTo({
+            url: '/pages/login-page/index'
+          })
+        }
         if (res && res.data) {
           resolve(res.data)
         } else {
