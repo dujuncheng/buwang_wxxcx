@@ -29,13 +29,13 @@
             })
 			return
           }
-
+          
           wx.showModal({
             title: '恭喜棒棒哒你~',
             content: '又复习了一个笔记',
             success (res) {
-              wx.redirectTo({
-                url: '/pages/review-list/index'
+              wx.navigateBack({
+                delta: 1
               })
             }
           })
