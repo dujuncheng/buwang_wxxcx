@@ -11,8 +11,7 @@
 <script>
 	import ajax from '../../utils/ajax.js'
     import { Base64 } from 'js-base64'
-    import EventBus from '@fe-wxmp/event-bus'
-    let bus = new EventBus()
+    import EventBus from '../../utils/eventBus.js'
 
 	export default {
 	  data () {
@@ -32,11 +31,11 @@
 			return
           }
 
+          this.bus.emit('refresh')
           wx.showModal({
             title: '恭喜棒棒哒你~',
             content: '又复习了一个笔记',
             success (res) {
-              bus.emit('refresh')
               wx.navigateBack({
                 delta: 1
               })
@@ -66,6 +65,7 @@
 		}
 	    this.noteId = Number(options.note_id)
 
+		this.bus = new EventBus()
 	    this.getContent(this.noteId)
 	  }
 	}

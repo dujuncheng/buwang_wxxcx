@@ -24,8 +24,7 @@
 	import ajax from '../../utils/ajax.js'
     import { Base64 } from 'js-base64'
 	import { REVIEW_PAGE_SIZE } from '../../config/const.js'
-    import EventBus from '@fe-wxmp/event-bus';
-	let bus = new EventBus();
+    import EventBus from '../../utils/eventBus.js'
 
 	export default {
 	  data () {
@@ -50,6 +49,9 @@
           this.getReviewList(this.page, REVIEW_PAGE_SIZE)
 		}
       },
+	  onShow() {
+        this.refresh()
+	  },
       methods: {
         refresh() {
           this.page = 1
@@ -108,8 +110,8 @@
 	  },
 	  mounted () {
 	    this.getReviewList(1, REVIEW_PAGE_SIZE)
-
-        bus.on('refresh', this.refresh)
+        let bus = new EventBus()
+        bus.on('refresh', this.refresh, this)
 	  }
 	}
 </script>

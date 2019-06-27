@@ -32,9 +32,9 @@
     "less-loader": "^4.1.0"
   },
   "dependencies": {
-    "@fe-wxmp/event-bus": "^1.0.0",
     "@megalo/api": "latest",
     "@megalo/vhtml-plugin": "latest",
+    "js-base64": "^2.5.1",
     "megalo": "latest",
     "octoparse": "^0.4.2",
     "vant-weapp": "^0.5.15"
