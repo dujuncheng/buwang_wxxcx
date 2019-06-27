@@ -1,0 +1,6 @@
+<view class="tuan-contaner">
+    <view class="text-container">他们都在团</view>
+    <view class="avater-container">
+        <image wx:for="{{tuanAvaters}}" wx:if="{{index < 5}}" wx:key="index" wx:for-item="item" src="{{item}}" class="avater-img" lazy-load ></image>
+    </view>
+</view>
