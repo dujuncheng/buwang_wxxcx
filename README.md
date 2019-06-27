@@ -1,5 +1,7 @@
 # buwang-wxxcx
 
+本项目使用 megalo 构建
+
 ## 运行
 
 微信小程序：

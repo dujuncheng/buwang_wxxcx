@@ -24,6 +24,8 @@
 	import ajax from '../../utils/ajax.js'
     import { Base64 } from 'js-base64'
 	import { REVIEW_PAGE_SIZE } from '../../config/const.js'
+    import EventBus from '@fe-wxmp/event-bus';
+	let bus = new EventBus();
 
 	export default {
 	  data () {
@@ -37,10 +39,7 @@
        * 页面相关事件处理函数--监听用户下拉动作
        */
       onPullDownRefresh () {
-        this.page = 1
-		this.reviewList = []
-		this.hasMore = true
-        this.getReviewList(this.page, REVIEW_PAGE_SIZE)
+        this.refresh();
       },
       /**
        * 页面上拉触底事件的处理函数
@@ -52,6 +51,12 @@
 		}
       },
       methods: {
+        refresh() {
+          this.page = 1
+          this.reviewList = []
+          this.hasMore = true
+          this.getReviewList(this.page, REVIEW_PAGE_SIZE)
+		},
         goContent (noteId) {
           if (noteId) {
             wx.navigateTo({
@@ -103,6 +108,8 @@
 	  },
 	  mounted () {
 	    this.getReviewList(1, REVIEW_PAGE_SIZE)
+
+        bus.on('refresh', this.refresh)
 	  }
 	}
 </script>

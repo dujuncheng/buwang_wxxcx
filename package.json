@@ -5,6 +5,7 @@
   "scripts": {
     "build:wechat": "megalo-cli-service build",
     "build:alipay": "megalo-cli-service build --platform alipay",
+    "build:web": "megalo-cli-service build --platform web",
     "build:swan": "megalo-cli-service build --platform swan",
     "build:toutiao": "megalo-cli-service build --platform toutiao",
     "dev:alipay": "megalo-cli-service serve --platform alipay",
@@ -31,6 +32,7 @@
     "less-loader": "^4.1.0"
   },
   "dependencies": {
+    "@fe-wxmp/event-bus": "^1.0.0",
     "@megalo/api": "latest",
     "@megalo/vhtml-plugin": "latest",
     "megalo": "latest",
