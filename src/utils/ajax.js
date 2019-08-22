@@ -1,6 +1,6 @@
 const Storage                = require('./storage.js')
 
-const baseUrl = 'https://www.sharkbaby.club/notebook'
+const baseUrl = 'https://dujuncheng.com/notebook'
 
 const ajax = (type, method, params) => {
   return new Promise((resolve, reject) => {
