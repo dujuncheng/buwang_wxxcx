@@ -1,5 +1,13 @@
 <template>
 	<div class="rediv-list-container">
+		<div class="tips">
+			<template v-if="waitNum > 0">
+				待复习<span class="big-num">{{waitNum}} </span> 篇, 已复习<span class="big-num">{{doneNum}}</span>篇
+			</template>
+			<template  v-if="waitNum === 0 ">
+				恭喜你，笔记全部都复习完了
+			</template>
+		</div>
 		<div class="item" v-for="(item, index) in reviewList" :key="index" @click="goContent(item.note_id)">
 			<div class="title">
 				{{item.title}}
@@ -31,7 +39,9 @@
 	    return {
 	      reviewList: [],
 		  page: 1,
-          hasMore: true
+          hasMore: true,
+		  waitNum: 0,
+		  doneNum: 0
 		}
 	  },
       /**
@@ -80,6 +90,8 @@
 			}
 
 			this.reviewList = this.reviewList.concat(newArr)
+			this.doneNum = result.done_num
+			this.waitNum = result.wait_num
 		  } catch (e) {
 			console.log(e)
           }
@@ -117,6 +129,33 @@
 </script>
 
 <style>
+	.rediv-list-container {
+		padding-top: 99rpx;
+	}
+	.tips {
+		width: 100vw;
+		height: 99rpx;
+		font-family: PingFang-SC-Regular;
+		font-size: 28rpx;
+		color: #99521F;
+		letter-spacing: 0;
+		line-height: 32rpx;
+		background: #FFF2E6;
+		display: flex;
+		align-items: center;
+		padding-left: 24rpx;
+		padding-right: 24rpx;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 99;
+	}
+	.big-num {
+		font-size: 36rpx;
+		color: #FF1940;
+		margin-left: 6rpx;
+		margin-right: 6rpx;
+	}
 	.item {
 		padding: 22px 26px;
 		position: relative;
@@ -184,7 +223,7 @@
 	.circle {
 		position: absolute;
 		right: 30px;
-		top: 30px;
+		top: 126rpx;
 		width: 10px;
 		height: 10px;
 		background-color: red;
